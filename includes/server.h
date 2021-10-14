@@ -6,7 +6,7 @@
 /*   By: mmasuda <mmasuda@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:34:58 by mmasuda           #+#    #+#             */
-/*   Updated: 2021/10/12 23:34:29 by mmasuda          ###   ########.fr       */
+/*   Updated: 2021/10/13 23:03:26 by mmasuda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ void	convert_bit_into_string(const int sig);
 void	convert_signal_into_bit(const int sig, int *stored_bits,
 			const int number_of_bits);
 void	output_recived_message(char *recived_msg, const int current_msg_length);
-void	send_signal_to_client(int state);
 
 #endif

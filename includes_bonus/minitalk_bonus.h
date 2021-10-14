@@ -6,7 +6,7 @@
 /*   By: mmasuda <mmasuda@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:17:46 by mmasuda           #+#    #+#             */
-/*   Updated: 2021/10/13 14:15:21 by mmasuda          ###   ########.fr       */
+/*   Updated: 2021/10/13 23:09:45 by mmasuda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 extern int	g_signal_pid;
 
+typedef enum e_bool { false, true }	t_bool;
+
 typedef enum e_errors
 {
 	INCORRECT_ARG,
@@ -37,5 +39,7 @@ typedef enum e_errors
 }	t_errors;
 
 void	display_error(const int error, const pid_t pid, const char *caller);
+t_bool	is_caller_server(const char *caller);
+void	send_signal_to_client(int state);
 
 #endif

@@ -6,24 +6,18 @@
 /*   By: mmasuda <mmasuda@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 16:18:31 by mmasuda           #+#    #+#             */
-/*   Updated: 2021/10/13 14:36:44 by mmasuda          ###   ########.fr       */
+/*   Updated: 2021/10/13 23:02:20 by mmasuda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/server_bonus.h"
 
-void	send_signal_to_client(int state)
+void	output_recived_message(char *recived_msg, const int current_msg_length)
 {
-	if (state == SUCCESS)
-	{
-		if (kill(g_signal_pid, SIGUSR1) == -1)
-			display_error(SEND_ERROR, NONE, "server");
-	}
-	else if (state == ERROR)
-	{
-		if (kill(g_signal_pid, SIGUSR2) == -1)
-			display_error(SEND_ERROR, NONE, "server");
-	}
+	write(1, recived_msg, current_msg_length);
+	write(1, "\n", 1);
+	ft_memset(recived_msg, 0, BUFFER_SIZE + 1);
+	send_signal_to_client(SUCCESS);
 }
 
 void	convert_signal_into_bit(const int sig, int *stored_bits,
@@ -75,12 +69,12 @@ int	main(void)
 	ft_memset(&act, 0, sizeof(act));
 	sigemptyset(&act.sa_mask);
 	act.sa_sigaction = &signal_handler;
-	act.sa_flags = SA_SIGINFO;
+	act.sa_flags = SA_SIGINFO | SA_RESTART;
 	if (sigaction(SIGUSR1, &act, NULL) == -1)
 		display_error(SIGACTION_ERROR, NONE, "server");
 	if (sigaction(SIGUSR2, &act, NULL) == -1)
 		display_error(SIGACTION_ERROR, NONE, "server");
-	while (1)
+	while (true)
 		pause();
 	return (0);
 }

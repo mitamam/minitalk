@@ -6,7 +6,7 @@
 /*   By: mmasuda <mmasuda@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:17:48 by mmasuda           #+#    #+#             */
-/*   Updated: 2021/10/13 14:26:33 by mmasuda          ###   ########.fr       */
+/*   Updated: 2021/10/13 23:12:11 by mmasuda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ void	send_char_to_server(const pid_t pid, const char to_send)
 
 void	send_message_to_server(const pid_t pid, const char *to_send_msg)
 {
-	size_t	i;
-
-	i = -1;
 	while (*to_send_msg != '\0')
 	{
 		send_char_to_server(pid, *to_send_msg);
@@ -72,7 +69,7 @@ int	main(int argc, char **argv)
 	char				*to_send_msg;
 
 	if (argc != 3)
-		display_error(INCORRECT_ARG, 0, "client");
+		display_error(INCORRECT_ARG, NONE, "client");
 	pid = ft_atoi(argv[1]);
 	to_send_msg = argv[2];
 	check_argument_is_valid(pid, to_send_msg);
@@ -84,7 +81,7 @@ int	main(int argc, char **argv)
 	if (sigaction(SIGUSR2, &act, NULL))
 		display_error(SIGACTION_ERROR, pid, "client");
 	send_message_to_server(pid, to_send_msg);
-	while (1)
+	while (true)
 		pause();
 	return (0);
 }
